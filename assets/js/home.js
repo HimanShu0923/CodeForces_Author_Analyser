@@ -1,6 +1,8 @@
 HEROKU_LINK = "https://hidden-castle-65964.herokuapp.com/";
 
 function script(topicsDict) {
+    var invalidWarning = document.getElementById('invalidWarning');
+    invalidWarning.style.display = 'none';
     if (topicsDict == null) {
         topicsDict = JSON.parse(document.getElementById('topicsDict').innerText);
     }
@@ -102,6 +104,8 @@ script(null);
 var fetchDataButton = document.getElementById('fetchData');
 var userIdInput = document.getElementById('userIdInput');
 fetchDataButton.addEventListener('click', () => {
+    var invalidWarning = document.getElementById('invalidWarning');
+    invalidWarning.style.display = 'block';
     var userId = userIdInput.value;
     var obj = { "userId": userId };
     var url = HEROKU_LINK + 'https://codeforces.com/contests/writer/' + userId;
@@ -110,25 +114,56 @@ fetchDataButton.addEventListener('click', () => {
     }).then(function(html) {
         var parser = new DOMParser();
         var doc = parser.parseFromString(html, 'text/html');
-        var flag = doc.querySelectorAll('.bottom .dark .left .right');
-        if (flag && flag.innerText == 'No contests') {
+        var flag = doc.querySelectorAll('.bottom.dark.left.right');
+        console.log(flag);
+        // if (flag && flag[0].innerText == '\n        No contests\n    ') {
+        //     var emptyWarning = document.getElementById('emptyWarning');
+        //     emptyWarning.style.display = 'block';
+        //     console.log("No contest");
+        //     return;
+        // } else {
+        //     var emptyWarning = document.getElementById('emptyWarning');
+        //     emptyWarning.style.display = 'none';
+        // }
+        // var message = doc.querySelectorAll('.message');
+        // if (message && message.innerText == 'No such user') {
+        //     var invalidWarning = document.getElementById('invalidWarning');
+        //     invalidWarning.style.display = 'block';
+        //     console.log("No user");
+        //     return;
+        // } else {
+        //     var invalidWarning = document.getElementById('invalidWarning');
+        //     invalidWarning.style.display = 'none';
+        // }
+        var lefts = doc.querySelectorAll('tr');
+
+        var check = 0;
+        if (lefts.length == 0) {
             var emptyWarning = document.getElementById('emptyWarning');
             emptyWarning.style.display = 'block';
+            console.log("Sorry, No Data!");
             return;
         }
-        var message = doc.querySelectorAll('.message');
-        if (message && message.innerText == 'No such user') {
-            var invalidWarning = document.getElementById('invalidWarning');
-            invalidWarning.style.display = 'block';
-            return;
-        }
-        var lefts = doc.querySelectorAll('tr');
         var contests = [];
         for (var i = 0; i < lefts.length; i++) {
             if (lefts[i].getAttribute('data-contestid') != null) {
+                check += 1;
                 contests.push(lefts[i].getAttribute('data-contestid'));
             }
         }
+
+        if (check == 0) {
+            var emptyWarning = document.getElementById('emptyWarning');
+            emptyWarning.style.display = 'block';
+            var invalidWarning = document.getElementById('invalidWarning');
+            invalidWarning.style.display = 'none';
+            return;
+        } else {
+            var emptyWarning = document.getElementById('emptyWarning');
+            emptyWarning.style.display = 'none';
+        }
+
+
         var obj = { "contests": contests, "userId": userId };
         fetch(`/fetchData/${JSON.stringify(obj)}`, {
                 method: "GET"
