@@ -10,6 +10,8 @@ module.exports.home = (req, res) => {
 }
 
 module.exports.createDatabase = async(req, res) => {
+
+    console.log("Here");
     var allQuestions = await axios.get('https://codeforces.com/api/problemset.problems');
     allQuestions = allQuestions.data.result.problems;
     var contestsDict = {};
@@ -42,9 +44,9 @@ module.exports.createDatabase = async(req, res) => {
         }
     }
 
-    return res.status(200).json({
-        'status': "ok",
-    });
+    // return res.status(200).json({
+    //     'status': "ok",
+    // });
 }
 
 module.exports.fetchData = async(req, res) => {
