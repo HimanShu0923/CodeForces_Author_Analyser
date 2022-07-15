@@ -107,6 +107,16 @@ fetchDataButton.addEventListener('click', () => {
     var invalidWarning = document.getElementById('invalidWarning');
     invalidWarning.style.display = 'block';
     var userId = userIdInput.value;
+
+    if (userId == "") {
+
+        var invalidWarning = document.getElementById('invalidWarning');
+        invalidWarning.style.display = 'none';
+        return;
+    }
+
+
+
     var obj = { "userId": userId };
     var url = HEROKU_LINK + 'https://codeforces.com/contests/writer/' + userId;
     fetch(url).then(function(response) {
