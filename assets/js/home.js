@@ -153,10 +153,10 @@ fetchDataButton.addEventListener('click', () => {
         }
 
         if (check == 0) {
-            var emptyWarning = document.getElementById('emptyWarning');
-            emptyWarning.style.display = 'block';
             var invalidWarning = document.getElementById('invalidWarning');
             invalidWarning.style.display = 'none';
+            var emptyWarning = document.getElementById('emptyWarning');
+            emptyWarning.style.display = 'block';
         } else {
             var emptyWarning = document.getElementById('emptyWarning');
             emptyWarning.style.display = 'none';
