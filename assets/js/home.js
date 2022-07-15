@@ -107,11 +107,19 @@ fetchDataButton.addEventListener('click', () => {
     var invalidWarning = document.getElementById('invalidWarning');
     invalidWarning.style.display = 'block';
     var userId = userIdInput.value;
-
+    var contests = [];
     if (userId == "") {
-
+        var preferred = document.getElementById('preferred');
+        preferred.style.display = 'none';
         var invalidWarning = document.getElementById('invalidWarning');
         invalidWarning.style.display = 'none';
+        var obj = { "contests": contests, "userId": userId };
+        fetch(`/fetchData/${JSON.stringify(obj)}`, {
+                method: "GET"
+            }).then(response => response.json())
+            .then((json) => {
+                script(json.topicsDict);
+            });
         return;
     }
 
@@ -122,6 +130,7 @@ fetchDataButton.addEventListener('click', () => {
     fetch(url).then(function(response) {
         return response.text();
     }).then(function(html) {
+
         var parser = new DOMParser();
         var doc = parser.parseFromString(html, 'text/html');
         var flag = doc.querySelectorAll('.bottom.dark.left.right');
@@ -154,7 +163,7 @@ fetchDataButton.addEventListener('click', () => {
             console.log("Sorry, No Data!");
             return;
         }
-        var contests = [];
+
         for (var i = 0; i < lefts.length; i++) {
             if (lefts[i].getAttribute('data-contestid') != null) {
                 check += 1;
