@@ -34,7 +34,6 @@ module.exports.createDatabase = async(req, res) => {
     for (var i = 0; i < contestIds.length; i++) {
         var x = await contest.findOne({ contestId: contestIds[i] });
         if (!x) {
-            console.log(contestIds[i]);
             var y = await contest.create({
                 "contestId": contestIds[i],
                 "index": contestsDict[contestIds[i]][0],
@@ -42,6 +41,10 @@ module.exports.createDatabase = async(req, res) => {
             });
         }
     }
+
+    return res.status(200).json({
+        'status': "ok",
+    });
 }
 
 module.exports.fetchData = async(req, res) => {
