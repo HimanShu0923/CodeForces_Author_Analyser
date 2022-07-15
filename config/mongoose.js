@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const axios = require('axios');
-
 mongoose.connect('mongodb+srv://HimanShu09:8iVS0LKM8HJVt2zf@cluster0.ttwau.mongodb.net/?retryWrites=true&w=majority', {
     useNewUrlParser: true,
 
@@ -12,7 +11,7 @@ db.on('error', console.error.bind(console, 'Error in connecting to MongoDB'));
 
 db.once('open', () => {
     console.log('Connected to MongoDB successfully');
-    axios.get('http://localhost:8080/createDatabase');
+    axios.get('/createDatabase');
 });
 
 module.exports = db;

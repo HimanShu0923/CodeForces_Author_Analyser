@@ -1,5 +1,5 @@
 var express = require('express');
-var port = 8080;
+var port = process.env.PORT || 8080;
 var dir = __dirname;
 const hostname = "0.0.0.0"
 var app = express();
@@ -17,10 +17,6 @@ app.use('/', require('./routes'));
 
 app.listen(port, hostname, function(err) {
     console.log('server is running');
-    // axios.get('http://localhost:8080/createDatabase');
-    // setInterval(function() {
-    //     axios.get('http://localhost:8080/createDatabase');
-    // }, 10);
     if (err) {
         console.log(err);
     }
