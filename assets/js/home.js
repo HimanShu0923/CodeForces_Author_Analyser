@@ -1,6 +1,7 @@
 HEROKU_LINK = "https://hidden-castle-65964.herokuapp.com/";
+
 function script(topicsDict) {
-    if (topicsDict==null) {
+    if (topicsDict == null) {
         topicsDict = JSON.parse(document.getElementById('topicsDict').innerText);
     }
     var totalQuestions = new Set();
@@ -26,15 +27,15 @@ function script(topicsDict) {
         }
         questions.push(q);
         cardElement = cardElement + `<div class="card">
-    <div class="card-header" id="`+ headingId + `">
+    <div class="card-header" id="` + headingId + `">
         <div class="mb-0">
-            <h5 class="faq-title" data-toggle="collapse" data-target="`+ collapseHashtag + `"
-                data-aria-expanded="true" data-aria-controls="`+ collapseId + `">
+            <h5 class="faq-title" data-toggle="collapse" data-target="` + collapseHashtag + `"
+                data-aria-expanded="true" data-aria-controls="` + collapseId + `">
                 <span class="badge">${i + 1}</span>${tags[i]}
             </h5>
         </div>
     </div>
-    <div id="`+ collapseId + `" class="collapse" aria-labelledby="` + headingId + `"
+    <div id="` + collapseId + `" class="collapse" aria-labelledby="` + headingId + `"
         data-parent="#accordion">
         <div class="card-body">
             <ol>` + listElement + `</ol>
@@ -49,7 +50,7 @@ function script(topicsDict) {
         var temp = (questions[i] / totalQuestions.size) * 100;
         barElement = barElement + `<div class="graph-legend">${tags[i]}</div>
     <span class="graph-barBack">
-        <li class="graph-bar" data-value="`+ temp + `">
+        <li class="graph-bar" data-value="` + temp + `">
         </li>
     </span> `;
     }
@@ -59,39 +60,39 @@ function script(topicsDict) {
     var modal = document.getElementById("myModal");
     var btn = document.getElementById("myBtn");
     var span = document.getElementsByClassName("close")[0];
-    btn.onclick = function () {
+    btn.onclick = function() {
         modal.style.display = "block";
     }
-    span.onclick = function () {
+    span.onclick = function() {
         modal.style.display = "none";
     }
-    window.onclick = function (event) {
+    window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
     }
-    $(document).ready(function () {
-        $('.graph-bar').each(function () {
+    $(document).ready(function() {
+        $('.graph-bar').each(function() {
             var dataWidth = $(this).data('value');
             $(this).css("width", dataWidth + "%");
         });
     });
-    $(document).ready(function () {
-        $('.chart-bubble').each(function () {
+    $(document).ready(function() {
+        $('.chart-bubble').each(function() {
             // Bubble Size
             var bubbleSize = $(this).data('value');
-            $(this).css("width", function () {
+            $(this).css("width", function() {
                 return (bubbleSize * 10) + "px"
             });
-            $(this).css("height", function () {
+            $(this).css("height", function() {
                 return (bubbleSize * 10) + "px"
             });
             var posX = $(this).data('x');
             var posY = $(this).data('y');
-            $(this).css("left", function () {
+            $(this).css("left", function() {
                 return posX - (bubbleSize * 0.5) + "%"
             });
-            $(this).css("bottom", function () {
+            $(this).css("bottom", function() {
                 return posY - (bubbleSize * 0.5) + "%"
             });
         });
@@ -104,9 +105,9 @@ fetchDataButton.addEventListener('click', () => {
     var userId = userIdInput.value;
     var obj = { "userId": userId };
     var url = HEROKU_LINK + 'https://codeforces.com/contests/writer/' + userId;
-    fetch(url).then(function (response) {
+    fetch(url).then(function(response) {
         return response.text();
-    }).then(function (html) {
+    }).then(function(html) {
         var parser = new DOMParser();
         var doc = parser.parseFromString(html, 'text/html');
         var flag = doc.querySelectorAll('.bottom .dark .left .right');
@@ -129,14 +130,14 @@ fetchDataButton.addEventListener('click', () => {
             }
         }
         var obj = { "contests": contests, "userId": userId };
-        fetch(`http://localhost:8080/fetchData/${JSON.stringify(obj)}`, {
-            method: "GET"
-        }).then(response => response.json())
+        fetch(`/fetchData/${JSON.stringify(obj)}`, {
+                method: "GET"
+            }).then(response => response.json())
             .then((json) => {
                 script(json.topicsDict);
             });
         // window.location.href = `http://localhost:8080/fetchData/${JSON.stringify(obj)}`;
-    }).catch(function (err) {
+    }).catch(function(err) {
         console.log(err);
     });
 });
