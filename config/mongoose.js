@@ -12,6 +12,7 @@ if (port == 8080) {
 
 mongoose.connect('mongodb+srv://HimanShu09:8iVS0LKM8HJVt2zf@cluster0.ttwau.mongodb.net/?retryWrites=true&w=majority', {
     useNewUrlParser: true,
+    useFindAndModify: false,
     useUnifiedTopology: true
 });
 const db = mongoose.connection;
