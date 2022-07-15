@@ -7,7 +7,7 @@ var pref = "";
 if (port == 8080) {
     pref = "http://localhost:8080/createDatabase"
 } else {
-    pref = "https://codeforce-author-analyser.herokuapp.com/createDatabase"
+    pref = `https://codeforce-author-analyser.herokuapp.com:${port}/createDatabase`
 }
 
 mongoose.connect('mongodb+srv://HimanShu09:8iVS0LKM8HJVt2zf@cluster0.ttwau.mongodb.net/?retryWrites=true&w=majority', {
