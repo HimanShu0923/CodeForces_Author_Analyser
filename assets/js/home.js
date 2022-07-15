@@ -157,9 +157,14 @@ fetchDataButton.addEventListener('click', () => {
             invalidWarning.style.display = 'none';
             var emptyWarning = document.getElementById('emptyWarning');
             emptyWarning.style.display = 'block';
+            var preferred = document.getElementById('preferred');
+            preferred.style.display = 'none';
+
         } else {
             var emptyWarning = document.getElementById('emptyWarning');
             emptyWarning.style.display = 'none';
+            var preferred = document.getElementById('preferred');
+            preferred.style.display = 'block';
         }
 
 
