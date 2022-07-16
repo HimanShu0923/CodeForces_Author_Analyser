@@ -109,10 +109,13 @@ fetchDataButton.addEventListener('click', () => {
     var userId = userIdInput.value;
     var contests = [];
     if (userId == "") {
+        //Hiding prefered
         var preferred = document.getElementById('preferred');
         preferred.style.display = 'none';
-        var invalidWarning = document.getElementById('invalidWarning');
-        invalidWarning.style.display = 'none';
+        //Hiding Extra information
+        var emptyWarning = document.getElementById('emptyWarning');
+        emptyWarning.style.display = 'none';
+
         var obj = { "contests": contests, "userId": userId };
         fetch(`/fetchData/${JSON.stringify(obj)}`, {
                 method: "GET"
@@ -133,29 +136,7 @@ fetchDataButton.addEventListener('click', () => {
 
         var parser = new DOMParser();
         var doc = parser.parseFromString(html, 'text/html');
-        var flag = doc.querySelectorAll('.bottom.dark.left.right');
-        console.log(flag);
-        // if (flag && flag[0].innerText == '\n        No contests\n    ') {
-        //     var emptyWarning = document.getElementById('emptyWarning');
-        //     emptyWarning.style.display = 'block';
-        //     console.log("No contest");
-        //     return;
-        // } else {
-        //     var emptyWarning = document.getElementById('emptyWarning');
-        //     emptyWarning.style.display = 'none';
-        // }
-        // var message = doc.querySelectorAll('.message');
-        // if (message && message.innerText == 'No such user') {
-        //     var invalidWarning = document.getElementById('invalidWarning');
-        //     invalidWarning.style.display = 'block';
-        //     console.log("No user");
-        //     return;
-        // } else {
-        //     var invalidWarning = document.getElementById('invalidWarning');
-        //     invalidWarning.style.display = 'none';
-        // }
         var lefts = doc.querySelectorAll('tr');
-
         var check = 0;
         if (lefts.length == 0) {
             var emptyWarning = document.getElementById('emptyWarning');
@@ -172,8 +153,6 @@ fetchDataButton.addEventListener('click', () => {
         }
 
         if (check == 0) {
-            var invalidWarning = document.getElementById('invalidWarning');
-            invalidWarning.style.display = 'none';
             var emptyWarning = document.getElementById('emptyWarning');
             emptyWarning.style.display = 'block';
             var preferred = document.getElementById('preferred');
@@ -185,8 +164,6 @@ fetchDataButton.addEventListener('click', () => {
             var preferred = document.getElementById('preferred');
             preferred.style.display = 'block';
         }
-
-
         var obj = { "contests": contests, "userId": userId };
         fetch(`/fetchData/${JSON.stringify(obj)}`, {
                 method: "GET"

@@ -10,7 +10,6 @@ module.exports.home = (req, res) => {
 }
 
 module.exports.createDatabase = async(req, res) => {
-
     console.log("Here");
     var allQuestions = await axios.get('https://codeforces.com/api/problemset.problems');
     allQuestions = allQuestions.data.result.problems;
